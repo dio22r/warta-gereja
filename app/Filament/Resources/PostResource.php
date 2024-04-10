@@ -18,9 +18,9 @@ class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
-    protected static ?string $navigationGroup = "Warta Jemaat";
+    protected static ?string $navigationGroup = "Church Bulletins";
 
     public static function form(Form $form): Form
     {
@@ -73,6 +73,7 @@ class PostResource extends Resource
                 Tables\Columns\TextColumn::make('slug')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('categories.title'),
                 Tables\Columns\IconColumn::make('is_active')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('published_at')
