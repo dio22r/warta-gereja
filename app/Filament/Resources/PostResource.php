@@ -27,7 +27,9 @@ class PostResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Grid::make([
-                        'sm' => 3,
+                        'sm' => 1,
+                        'md' => 12,
+                        'lg' => 12,
                         'xl' => 6,
                         '2xl' => 8,
                     ])
@@ -47,7 +49,7 @@ class PostResource extends Resource
                                 Forms\Components\RichEditor::make('content')
                                     ->columnSpanFull(),
                             ])
-                            ->columnSpan(['sm' => 2, "xl" => 4, '2xl' => 6]),
+                            ->columnSpan(['sm' => 2, "md" => 7, "lg" => 7, "xl" => 4, '2xl' => 6]),
                         Forms\Components\Section::make()
                             ->schema([
                                 Forms\Components\Toggle::make('is_active')
@@ -58,7 +60,7 @@ class PostResource extends Resource
                                     ->required()
                                     ->maxLength(1024),
                             ])
-                            ->columnSpan(['sm' => 1, "xl" => 2, '2xl' => 2]),
+                            ->columnSpan(['sm' => 1, "md" => 5, "lg" => 5, "xl" => 2, '2xl' => 2]),
                     ])
             ]);
     }

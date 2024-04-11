@@ -2,26 +2,24 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CategoryResource\Pages;
-use App\Filament\Resources\CategoryResource\RelationManagers;
-use App\Models\Category;
+use App\Filament\Resources\FamilyResource\Pages;
+use App\Filament\Resources\FamilyResource\RelationManagers;
+use App\Models\Family;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Support\Str;
 
-class CategoryResource extends Resource
+class FamilyResource extends Resource
 {
-    protected static ?string $model = Category::class;
+    protected static ?string $model = Family::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationGroup = "Church Bulletins";
+    protected static ?string $navigationGroup = "Church Member";
 
     public static function form(Form $form): Form
     {
@@ -29,19 +27,15 @@ class CategoryResource extends Resource
             ->schema([
                 Forms\Components\Section::make()
                     ->columns([
-                        'sm' => 1,
-                        'xl' => 2,
+                        "sm" => 1,
+                        "lg" => 2
                     ])
                     ->schema([
-                        Forms\Components\TextInput::make('title')
+                        Forms\Components\TextInput::make('name')
                             ->required()
-                            ->maxLength(1024)
-                            ->live()
-                            ->debounce(500)
-                            ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
-                        Forms\Components\TextInput::make('slug')
-                            ->required()
-                            ->maxLength(1024),
+                            ->maxLength(255),
+                        Forms\Components\Textarea::make('description')
+                            ->columnSpanFull(),
                     ])
             ]);
     }
@@ -50,17 +44,26 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title')
-                    ->searchable()
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('total_member')
+                    ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('slug')
-                    ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: false)
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: false),
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('deleted_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+            ])
+            ->filters([
+                Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
@@ -69,6 +72,8 @@ class CategoryResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\ForceDeleteBulkAction::make(),
+                    Tables\Actions\RestoreBulkAction::make(),
                 ]),
             ]);
     }
@@ -83,7 +88,7 @@ class CategoryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageCategory::route('/'),
+            'index' => Pages\ManageFamily::route('/'),
         ];
     }
 
