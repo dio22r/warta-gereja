@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Member extends Model
@@ -48,6 +49,16 @@ class Member extends Model
     public function churchGroups(): BelongsToMany
     {
         return $this->belongsToMany(ChurchGroup::class, "member_church_group", "member_id", "church_group_id");
+    }
+
+    public function baptism(): HasOne
+    {
+        return $this->hasOne(Baptism::class, "member_id");
+    }
+
+    public function mortality(): HasOne
+    {
+        return $this->hasOne(Mortality::class, "member_id");
     }
 
     public function getAgeAttribute()
