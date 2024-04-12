@@ -5,6 +5,7 @@ namespace App\Providers\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\MenuItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -27,6 +28,12 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->spa()
+            ->profile(isSimple: false)
+            ->sidebarCollapsibleOnDesktop()
+            ->userMenuItems([
+                'profile' => MenuItem::make()->label('Edit profile'),
+            ])
             ->colors([
                 'primary' => Color::Amber,
             ])

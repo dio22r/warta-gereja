@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -31,7 +32,13 @@ class Member extends Model
         'D' => 'Widdower',
     ];
 
+    const ARR_GENDER_TYPE = [
+        "F" => "Female",
+        "M" => "Male"
+    ];
+
     protected $guarded = ["id", "created_at","updated_at"];
+
 
     public function family(): BelongsTo
     {
@@ -41,5 +48,32 @@ class Member extends Model
     public function churchGroups(): BelongsToMany
     {
         return $this->belongsToMany(ChurchGroup::class, "member_church_group", "member_id", "church_group_id");
+    }
+
+    public function getAgeAttribute()
+    {
+        return Carbon::parse($this->birth_date)->age;
+    }
+
+    public function getFrontTitleAttribute()
+    {
+        if ($this->age <= 11) {
+            return 'Adik';
+        }
+
+        if ($this->marital_status == 'S') {
+            return ($this->gender == 'M')
+                ? "Sdr."
+                : "Sdri.";
+        }
+
+        return ($this->sex == 'L')
+            ? "Bpk."
+            : "Ibu";
+    }
+
+    public function getBirthMonthDayAttribute()
+    {
+        return Carbon::parse($this->birth_date)->format('m-d'); // Format as 'month-day'
     }
 }

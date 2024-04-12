@@ -18,9 +18,11 @@ class MemberResource extends Resource
 {
     protected static ?string $model = Member::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user';
 
     protected static ?string $navigationGroup = "Church Member";
+
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
@@ -130,6 +132,9 @@ class MemberResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('gender')
                     ->badge()
+                    ->formatStateUsing(function (string $state) {
+                        return Member::ARR_GENDER_TYPE[$state] ?? ' - ';
+                    })
                     ->color(fn (string $state): string => match ($state) {
                         'M' => 'info',
                         'F' => 'danger',
@@ -143,6 +148,7 @@ class MemberResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('churchGroups.name')
                     ->badge()
+                    ->searchable()
                     ->color('gray'),
                 Tables\Columns\TextColumn::make('birth_date')
                     ->date()
