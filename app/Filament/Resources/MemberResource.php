@@ -127,8 +127,10 @@ class MemberResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('name', 'asc')
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('gender')
                     ->badge()
