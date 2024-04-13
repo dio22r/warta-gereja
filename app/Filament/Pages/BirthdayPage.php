@@ -96,7 +96,8 @@ class BirthdayPage extends Page implements HasForms
             foreach ($period as $date) {
                 $query->orWhereRaw("DATE_FORMAT(birth_date, '%m-%d') = ?", [$date->format("m-d")]);
             }
-        })->selectRaw("*, DATE_FORMAT(birth_date, '%m-%d') as date")
+        })->whereIn('status', [Member::STATUS_ACTIVE, Member::STATUS_UNAPPROVED])
+        ->selectRaw("*, DATE_FORMAT(birth_date, '%m-%d') as date")
             ->orderByRaw("MONTH(birth_date) ASC")
             ->orderByRaw("DAY(birth_date) ASC")
             ->get();
