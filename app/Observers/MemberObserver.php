@@ -20,9 +20,12 @@ class MemberObserver
     /**
      * Handle the Member "updated" event.
      */
-    public function updated(): void
+    public function updated(Member $member): void
     {
-        CountFamilyMember::dispatch();
+        if ($member->family_id !== $member->getOriginal('family_id')) {
+            CountFamilyMember::dispatch();
+        }
+
         CountChurchGroupMember::dispatch();
     }
 
