@@ -24,9 +24,13 @@ class MemberTotalWidget extends BaseWidget
 
         return [
             Stat::make("Total Member", $totalMember)
-                ->icon('heroicon-o-user'),
+                ->icon('heroicon-o-user')
+                ->description("All active member")
+                ->color("success"),
             Stat::make("Total Family", $totalFamily)
                 ->icon('heroicon-o-home')
+                ->description("All Family of the Church")
+                ->color("success")
         ];
     }
 
