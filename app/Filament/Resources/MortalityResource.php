@@ -131,10 +131,4 @@ class MortalityResource extends Resource
             'index' => Pages\ManageMortalities::route('/'),
         ];
     }
-
-    protected function handleRecordCreation(array $data): Model
-    {
-        dd($data);
-        return static::getModel()::create($data);
-    }
 }
