@@ -7,61 +7,58 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+## Introduction
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+This project provides a foundation for building modern web applications using the TALL stack and Filament for a beautiful and functional admin panel within Laravel.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## What's Included?
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+This repository contains the essential components for a TALL stack setup with Filament integration:
 
-## Learning Laravel
+-   Tailwind CSS: Utility-first CSS framework for rapid and responsive UI development.
+-   Alpine.js: Lightweight JavaScript framework for adding interactivity without extensive coding.
+-   Laravel Livewire: Server-side rendering framework for dynamic UIs and reduced page load times.
+-   Laravel: Core framework for building full-fledged web applications.
+-   Filament: Elegant admin panel package for Laravel that leverages the TALL stack.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Benefits
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+-   Faster Development: Streamlined development flow with readily available components and reduced need for complex JavaScript.
+-   Improved Maintainability: Clear separation of concerns and structure promote code clarity and maintainability.
+-   Enhanced User Experience: Livewire ensures real-time updates and Filament offers a user-friendly admin interface.
+-   Reduced Page Load Times: Livewire leverages server-side rendering, minimizing initial page loads.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Getting Started
 
-## Laravel Sponsors
+1. Prerequisites: Ensure you have Laravel and Composer installed on your development machine.
+   Installation:
+2. Clone this repository.
+    - Run `composer install` to install dependencies.
+    - Run `npm install` && `npm run dev` (if using Node.js for Tailwind CSS) or follow Tailwind CSS setup instructions for your preferred method.
+    - Run `php artisan migrate` to setup the database
+    - Run `php artisan filament:make-user` to create your initial admin user.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Additional Resources
 
-### Premium Partners
+-   Tailwind CSS: https://tailwindcss.com/docs/installation
+-   Alpine.js: https://alpinejs.dev/
+-   Laravel Livewire: https://livewire.laravel.com/docs/installation
+-   Filament Documentation: https://filamentphp.com/docs
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+# Snapshot
 
-## Contributing
+![Dashboard](./public/images/demo/Dashboard-Laravel.png)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+![Post](./public/images/demo/Posts-Laravel.png)
 
-## Code of Conduct
+![Edit Post](./public/images/demo/Edit-Post-Laravel.png)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+![Church Group](./public/images/demo/View-Church-Group-Laravel.png)
 
-## Security Vulnerabilities
+![Members](./public/images/demo/Members-Laravel.png)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+![Edit Members](./public/images/demo/Edit-Member-Laravel.png)
 
-## License
+![Birthday](./public/images/demo/Birthday-Laravel.png)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-# warta-gereja
+![Baptism](./public/images/demo/Baptisms-Laravel.png)
