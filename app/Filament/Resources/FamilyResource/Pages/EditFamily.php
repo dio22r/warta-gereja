@@ -4,16 +4,19 @@ namespace App\Filament\Resources\FamilyResource\Pages;
 
 use App\Filament\Resources\FamilyResource;
 use Filament\Actions;
-use Filament\Resources\Pages\ManageRecords;
+use Filament\Resources\Pages\EditRecord;
 
-class ManageFamily extends ManageRecords
+class EditFamily extends EditRecord
 {
     protected static string $resource = FamilyResource::class;
 
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\ViewAction::make(),
+            Actions\DeleteAction::make(),
+            Actions\ForceDeleteAction::make(),
+            Actions\RestoreAction::make(),
         ];
     }
 }

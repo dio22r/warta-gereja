@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\FamilyResource\Pages;
 use App\Filament\Resources\FamilyResource\RelationManagers;
+use App\Filament\Resources\FamilyResource\RelationManagers\MembersRelationManager;
 use App\Models\Family;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -56,7 +57,7 @@ class FamilyResource extends Resource
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
@@ -81,14 +82,17 @@ class FamilyResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            MembersRelationManager::class
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageFamily::route('/'),
+            'index' => Pages\ListFamilies::route('/'),
+            'create' => Pages\CreateFamily::route('/create'),
+            'view' => Pages\ViewFamily::route('/{record}'),
+            'edit' => Pages\EditFamily::route('/{record}/edit'),
         ];
     }
 

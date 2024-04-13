@@ -150,6 +150,8 @@ class MemberResource extends Resource
                     ->badge()
                     ->searchable()
                     ->color('gray'),
+                Tables\Columns\TextColumn::make('age')
+                    ->suffix(" Years"),
                 Tables\Columns\TextColumn::make('birth_date')
                     ->date()
                     ->sortable(),

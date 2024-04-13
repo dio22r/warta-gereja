@@ -4,9 +4,9 @@ namespace App\Filament\Resources\ChurchGroupResource\Pages;
 
 use App\Filament\Resources\ChurchGroupResource;
 use Filament\Actions;
-use Filament\Resources\Pages\ManageRecords;
+use Filament\Resources\Pages\ListRecords;
 
-class ManageChurchGroup extends ManageRecords
+class ListChurchGroups extends ListRecords
 {
     protected static string $resource = ChurchGroupResource::class;
 

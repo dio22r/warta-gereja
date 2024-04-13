@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ChurchGroupResource\Pages;
 use App\Filament\Resources\ChurchGroupResource\RelationManagers;
+use App\Filament\Resources\ChurchGroupResource\RelationManagers\MembersRelationManager;
 use App\Models\ChurchGroup;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -77,14 +78,17 @@ class ChurchGroupResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            MembersRelationManager::class,
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageChurchGroup::route('/'),
+            'index' => Pages\ListChurchGroups::route('/'),
+            'create' => Pages\CreateChurchGroup::route('/create'),
+            'view' => Pages\ViewChurchGroup::route('/{record}'),
+            'edit' => Pages\EditChurchGroup::route('/{record}/edit'),
         ];
     }
 
