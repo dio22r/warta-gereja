@@ -7,6 +7,8 @@ use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Pages\Page;
+use Filament\Resources\Pages\CreateRecord;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -40,7 +42,8 @@ class UserResource extends Resource
                         Forms\Components\TextInput::make('password')
                             ->password()
                             ->revealable()
-                            ->required()
+                            ->required((fn (Page $livewire) => $livewire instanceof CreateRecord))
+                            ->dehydrated(fn ($state) => filled($state))
                             ->confirmed()
                             ->maxLength(255),
                         Forms\Components\TextInput::make('password_confirmation')
