@@ -1,31 +1,23 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Resources\MemberResource\RelationManagers;
 
-use App\Filament\Resources\MemberResource\Pages;
-use App\Filament\Resources\MemberResource\RelationManagers;
-use App\Filament\Resources\MemberResource\RelationManagers\FamilyMembersRelationManager;
 use App\Models\Member;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
-use Filament\Support\Colors\Color;
+use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class MemberResource extends Resource
+class FamilyMembersRelationManager extends RelationManager
 {
-    protected static ?string $model = Member::class;
+    protected static string $relationship = 'familyMember';
 
-    protected static ?string $navigationIcon = 'heroicon-o-user';
+    protected static ?string $title = "My Family Member";
 
-    protected static ?string $navigationGroup = "Church Member";
-
-    protected static ?int $navigationSort = 3;
-
-    public static function form(Form $form): Form
+    public function form(Form $form): Form
     {
         return $form
             ->schema([
@@ -119,15 +111,14 @@ class MemberResource extends Resource
                                     ])
                             ])
                             ->columnSpan(['sm' => 1, "md" => 5, "lg" => 5, "xl" => 2, '2xl' => 2]),
-
-
                     ])
             ]);
     }
 
-    public static function table(Table $table): Table
+    public function table(Table $table): Table
     {
         return $table
+            ->recordTitleAttribute('name')
             ->defaultSort('name', 'asc')
             ->columns([
                 Tables\Columns\TextColumn::make('name')
@@ -144,99 +135,26 @@ class MemberResource extends Resource
                     })
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('family.name')
-                    ->badge()
-                    ->color('info')
-                    ->searchable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('churchGroups.name')
-                    ->badge()
-                    ->searchable()
-                    ->color('gray'),
-                Tables\Columns\TextColumn::make('age')
-                    ->suffix(" Years"),
                 Tables\Columns\TextColumn::make('birth_date')
                     ->date()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('birth_place')
-                    ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('blood_group')
-                    ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('address')
-                    ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('telp')
-                    ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: false),
-                Tables\Columns\TextColumn::make('email')
-                    ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: false),
-                Tables\Columns\TextColumn::make('marital_status')
-                    ->formatStateUsing(function (string $state) {
-                        return Member::ARR_MARITAL_STATUS[$state] ?? ' - ';
-                    })
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('status')
-                    ->badge()
-                    ->color(fn(string $state): string => match ($state) {
-                        (string) Member::STATUS_UNAPPROVED => 'gray',
-                        (string) Member::STATUS_ACTIVE => 'success',
-                        (string) Member::STATUS_NONACTIVE => 'danger'
-                    })
-                    ->formatStateUsing(function (string $state) {
-                        return Member::ARR_STATUS[$state] ?? ' - ';
-                    })
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('age')
+                    ->suffix(' years'),
             ])
             ->filters([
-                Tables\Filters\TrashedFilter::make(),
+                //
+            ])
+            ->headerActions([
+                Tables\Actions\CreateAction::make(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\ForceDeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
                 ]),
-            ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            FamilyMembersRelationManager::class
-        ];
-    }
-
-    public static function getPages(): array
-    {
-        return [
-            'index' => Pages\ListMembers::route('/'),
-            'create' => Pages\CreateMember::route('/create'),
-            'view' => Pages\ViewMember::route('/{record}'),
-            'edit' => Pages\EditMember::route('/{record}/edit'),
-        ];
-    }
-
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
             ]);
     }
 }

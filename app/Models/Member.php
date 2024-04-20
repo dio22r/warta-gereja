@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -38,12 +39,18 @@ class Member extends Model
         "M" => "Male"
     ];
 
-    protected $guarded = ["id", "created_at","updated_at"];
+    protected $guarded = ["id", "created_at", "updated_at"];
 
 
     public function family(): BelongsTo
     {
         return $this->belongsTo(Family::class, "family_id");
+    }
+
+    public function familyMember(): HasMany
+    {
+        return $this->hasMany(Member::class, "family_id", "family_id")
+            ->where("id", "!=", $this->id);
     }
 
     public function churchGroups(): BelongsToMany
