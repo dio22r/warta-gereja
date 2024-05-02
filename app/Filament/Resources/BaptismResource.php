@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\BaptismResource\Pages;
-use App\Filament\Resources\BaptismResource\RelationManagers;
 use App\Models\Baptism;
 use App\Models\Member;
 use Filament\Forms;
@@ -13,9 +12,6 @@ use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Support\Str;
 
 class BaptismResource extends Resource
 {
@@ -33,10 +29,11 @@ class BaptismResource extends Resource
             ->schema([
                 Forms\Components\Section::make()
                     ->schema([
-                        Forms\Components\Select::make('member')
+                        Forms\Components\Select::make('member_id')
                             ->live()
-                            ->relationship(titleAttribute: 'name')
-                            ->afterStateUpdated(function(Set $set, ?int $state) {
+                            ->searchable()
+                            ->relationship(name: 'member', titleAttribute: 'name')
+                            ->afterStateUpdated(function (Set $set, ?int $state) {
                                 $member = Member::find($state);
 
                                 if (!$member) {

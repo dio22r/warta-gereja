@@ -33,11 +33,12 @@ class MortalityResource extends Resource
             ->schema([
                 Forms\Components\Section::make()
                     ->schema([
-                        Forms\Components\Select::make('member')
+                        Forms\Components\Select::make('member_id')
                             ->label('Member')
+                            ->searchable()
                             ->live()
-                            ->relationship(titleAttribute: 'name')
-                            ->afterStateUpdated(function(Set $set, ?int $state) {
+                            ->relationship(name: 'member', titleAttribute: 'name')
+                            ->afterStateUpdated(function (Set $set, ?int $state) {
                                 $member = Member::find($state);
 
                                 if (!$member) {

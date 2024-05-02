@@ -17,12 +17,12 @@ class ManageMortalities extends ManageRecords
         return [
             Actions\CreateAction::make()
                 ->using(function (array $data, string $model): Model {
-                    $member = Member::find($data["member"]);
+                    $member = Member::find($data["member_id"]);
                     $member->status = Member::STATUS_NONACTIVE;
                     $member->save();
 
                     return $model::create($data);
-                }),
+                })
         ];
     }
 
