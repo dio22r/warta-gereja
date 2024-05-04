@@ -94,4 +94,9 @@ class Member extends Model
     {
         return Carbon::parse($this->birth_date)->format('m-d'); // Format as 'month-day'
     }
+
+    public function getAgeByDate(Carbon $date)
+    {
+        return Carbon::parse($this->birth_date)->diff($date->addDays(1))->y;
+    }
 }

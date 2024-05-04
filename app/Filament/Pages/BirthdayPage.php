@@ -110,8 +110,9 @@ class BirthdayPage extends Page implements HasForms
         foreach ($period as $date) {
             $arrTemp = $members->where("date", "=", $date->format("m-d"));
             if ($arrTemp->count() > 0) {
-                $arrTemp = $arrTemp->map(function ($item) {
+                $arrTemp = $arrTemp->map(function ($item) use ($date) {
                     $item->url = MemberResource::getUrl('view', ["record" => $item->id]);
+                    $item->ageOnDate = $item->getAgeByDate($date);
                     return $item;
                 });
 

@@ -20,6 +20,7 @@
                     <li>
                         <a href="{{ $member->url }}">
                             &nbsp; > {{ $member->front_title }} {{ $member->name }}
+                            (<strong>{{ $member->ageOnDate }}</strong> thn)
                         </a>
                     </li>
                     @endforeach
