@@ -18,7 +18,7 @@
                 <ul class="ml-3">
                     @foreach($date["data"] as $member)
                     <li>
-                        <a href="#">
+                        <a href="{{ $member->url }}">
                             &nbsp; > {{ $member->front_title }} {{ $member->name }}
                         </a>
                     </li>

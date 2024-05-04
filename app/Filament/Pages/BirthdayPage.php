@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use App\Filament\Resources\MemberResource;
 use App\Models\Member;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
@@ -41,7 +42,8 @@ class BirthdayPage extends Page implements HasForms
 
     public ?array $data = [];
 
-    public function mount() {
+    public function mount()
+    {
         $now = Carbon::now();
 
         $startDate = $now->startOfWeek(Carbon::MONDAY)->format('Y-m-d');
@@ -72,7 +74,8 @@ class BirthdayPage extends Page implements HasForms
             ->statePath('data');
     }
 
-    public function submit() {
+    public function submit()
+    {
         $data = $this->form->getState();
 
         if (!isset($data['start_date']) || !isset($data["end_date"])) {
@@ -88,7 +91,8 @@ class BirthdayPage extends Page implements HasForms
         $this->filterMember($data['start_date'], $data['end_date'], $isCustom);
     }
 
-    public function filterMember(string $startDate, string $endDate, bool $isCustom = false) {
+    public function filterMember(string $startDate, string $endDate, bool $isCustom = false)
+    {
 
         $period = CarbonPeriod::create($startDate, $endDate);
 
@@ -97,7 +101,7 @@ class BirthdayPage extends Page implements HasForms
                 $query->orWhereRaw("DATE_FORMAT(birth_date, '%m-%d') = ?", [$date->format("m-d")]);
             }
         })->whereIn('status', [Member::STATUS_ACTIVE, Member::STATUS_UNAPPROVED])
-        ->selectRaw("*, DATE_FORMAT(birth_date, '%m-%d') as date")
+            ->selectRaw("*, DATE_FORMAT(birth_date, '%m-%d') as date")
             ->orderByRaw("MONTH(birth_date) ASC")
             ->orderByRaw("DAY(birth_date) ASC")
             ->get();
@@ -106,6 +110,11 @@ class BirthdayPage extends Page implements HasForms
         foreach ($period as $date) {
             $arrTemp = $members->where("date", "=", $date->format("m-d"));
             if ($arrTemp->count() > 0) {
+                $arrTemp = $arrTemp->map(function ($item) {
+                    $item->url = MemberResource::getUrl('view', ["record" => $item->id]);
+                    return $item;
+                });
+
                 $memberByDay[$date->format("Y-m-d")] = [
                     "title" => $date->isoFormat('dddd, D MMMM Y'),
                     "data" => $arrTemp
