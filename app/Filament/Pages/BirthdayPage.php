@@ -8,13 +8,10 @@ use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
-use Filament\Pages\Actions\ButtonAction;
 use Filament\Pages\Page;
-use Illuminate\Http\Request;
 
 class BirthdayPage extends Page implements HasForms
 {
@@ -122,8 +119,6 @@ class BirthdayPage extends Page implements HasForms
                 ];
             }
         }
-
-        // if ($isCustom) dd($memberByDay);
 
         $this->birthdayMember = $members->toArray();
         $this->memberByDay = $memberByDay;
