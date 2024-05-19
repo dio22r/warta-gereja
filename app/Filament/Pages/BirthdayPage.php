@@ -103,6 +103,7 @@ class BirthdayPage extends Page implements HasForms
             ->orderByRaw("DAY(birth_date) ASC")
             ->get();
 
+        // dd($members);
         $memberByDay = [];
         foreach ($period as $date) {
             $arrTemp = $members->where("date", "=", $date->format("m-d"));
@@ -112,7 +113,6 @@ class BirthdayPage extends Page implements HasForms
                     $item->ageOnDate = $item->getAgeByDate($date);
                     return $item;
                 });
-
                 $memberByDay[$date->format("Y-m-d")] = [
                     "title" => $date->isoFormat('dddd, D MMMM Y'),
                     "data" => $arrTemp

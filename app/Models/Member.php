@@ -85,7 +85,7 @@ class Member extends Model
                 : "Sdri.";
         }
 
-        return ($this->sex == 'L')
+        return ($this->gender == 'M')
             ? "Bpk."
             : "Ibu";
     }
@@ -97,6 +97,7 @@ class Member extends Model
 
     public function getAgeByDate(Carbon $date)
     {
-        return Carbon::parse($this->birth_date)->diff($date->addDays(1))->y;
+        $newDate = $date->clone();
+        return Carbon::parse($this->birth_date)->diff($newDate->addDays(1))->y;
     }
 }
