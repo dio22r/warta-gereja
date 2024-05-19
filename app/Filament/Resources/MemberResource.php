@@ -203,12 +203,12 @@ class MemberResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
                 SelectFilter::make('status')
                     ->multiple()
-                    ->default([1, 0])
+                    ->default([Member::STATUS_ACTIVE, Member::STATUS_UNAPPROVED])
                     ->placeholder(null)
                     ->options([
-                        1 => 'Active',
-                        0 => 'Unapproved',
-                        -1 => 'Unactive',
+                        Member::STATUS_ACTIVE => 'Active',
+                        Member::STATUS_UNAPPROVED => 'Unapproved',
+                        Member::STATUS_NONACTIVE => 'Non-Active',
                     ])
             ])
             ->actions([
