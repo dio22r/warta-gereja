@@ -103,6 +103,8 @@ class BirthdayPage extends Page implements HasForms
             ->orderByRaw("DAY(birth_date) ASC")
             ->get();
 
+        setlocale(LC_TIME, 'id_ID');
+        Carbon::setLocale('id');
         // dd($members);
         $memberByDay = [];
         foreach ($period as $date) {
