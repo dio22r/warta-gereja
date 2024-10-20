@@ -75,19 +75,21 @@ class Member extends Model
 
     public function getFrontTitleAttribute()
     {
+        if ($this->marital_status != 'S') {
+            return ($this->gender == 'M')
+                ? "Bpk."
+                : "Ibu";
+        }
+
         if ($this->age <= 11) {
             return 'Adik';
         }
 
-        if ($this->marital_status == 'S') {
-            return ($this->gender == 'M')
-                ? "Sdr."
-                : "Sdri.";
-        }
-
         return ($this->gender == 'M')
-            ? "Bpk."
-            : "Ibu";
+            ? "Sdr."
+            : "Sdri.";
+
+
     }
 
     public function getBirthMonthDayAttribute()
